@@ -1,0 +1,462 @@
+
+
+
+<!doctype html>
+<!--
+/*************************************************************************
+* ADOBE CONFIDENTIAL
+* ___________________
+*
+* Copyright 2014 Adobe
+* All Rights Reserved.
+*
+* NOTICE: Adobe permits you to use, modify, and distribute this file in
+* accordance with the terms of the Adobe license agreement accompanying
+* it. If you have received this file from a source other than Adobe,
+* then your use, modification, or distribution of it requires the prior
+* written permission of Adobe. 
+**************************************************************************/
+-->
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<script src="./ext.js"></script>
+	<script src="./lib/CSInterface.js"></script>
+	<script src="./lib/jquery-1.9.1.js"></script>
+	<script src="./lib/Vulcan.js"></script>
+	<link href="css/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body onLoad="onLoaded()">
+
+	<div>
+		<!-- <button style="border: none; color: #009fff; z-index: 150; position: absolute;top: 10px; left: 10px" onClick="elementShowHide('tooltips')">⚙ Settings</button> -->
+		<!-- <div id="tooltips" style="background-color: rgba(23, 22, 22, 0.58); position: fixed; width: 100%; height: 100%; z-index: 100;display: none;" onClick="elementShowHide('tooltips')">settings</div> -->
+		<!-- <div id="settings" style="background-color: rgba(23, 22, 22, 0.58); position: fixed; width: 100%; height: 30%; z-index: 100;display: none;" onClick="elementShowHide('settings')">settings</div> -->
+			<div class="hide">
+				<select id="logoPosition">
+					<option label="upper left" value="_A"></option>
+					<option label="upper right" value="_B"></option>
+					<option label="lower left" value="_D"></option>
+					<option label="lower right" value="_C"></option>
+				</select>
+				<select id="watermarkDimensions">
+					<option value="Landscape">16:9</option>
+					<option value="Portrait">9:16</option>
+					<option value="Square">1:1</option>
+					<option value="2-3">2:3</option>
+				</select>
+			</div>
+		</div>
+<div class="panelContainer">
+<div class="header">
+		<img onclick="elementShowHide('logoPlacement')" style="z-index: 10" id=logo src="./payloads/cmlogo.png" draggable="true" ondragstart="genPath(event)">
+		<div id="logoPlacement" class="corners-container">
+			<div onclick="selectPlacement(0)" id="0" style="border-radius: 8px 0px 0px 0px; left: 4px; top: 4px" class="corner"></div>
+			<div onclick="selectPlacement(1)" id="1" style="border-radius: 0px 8px 0px 0px; right: 4px; top: 4px" class="corners"></div>
+			<div onclick="selectPlacement(2)" id="2" style="border-radius: 0px 0px 0px 8px; left: 4px; bottom: 4px" class="corners"></div>
+			<div onclick="selectPlacement(3)" id="3" style="border-radius: 0px 0px 8px 0px; right: 4px; bottom: 4px" class="corners"></div>
+		</div>
+		<script>
+			function selectPlacement(index){
+				var corners = ["0","1","2","3"]
+				var corner = document.getElementById(corners[index]);
+				for (var i = 0; i < corners.length; i++) {
+					var reset = document.getElementById(corners[i]);
+					reset.setAttribute("class", "corners");					
+				}
+				corner.setAttribute("class", "corner");
+				document.getElementById("logoPosition").selectedIndex = corners[index];
+			}
+
+			function elementShowHide(element) {
+				var x = document.getElementById(element);
+				if (x.style.display === "none") {
+				    x.style.display = "flex";
+				} else {
+				    x.style.display = "none";
+					}
+			}
+
+			function genPath(event){
+				var rootPath = "Z:/ART/Assets/3. Still/2. Overlay/2. Logos/2. Watermarks/";
+				var pos = document.getElementById("logoPosition").value
+				var ratio = document.getElementById("watermarkDimensions").value
+				var path = rootPath+ratio+"/"+ratio+pos+".png";
+				// alert(path)
+				dragHandler(event, path)
+			}
+		</script>
+	</div>
+
+	<div class="section">
+		<div onclick="elementShowHide('master')" class="section-header">
+			Timeline
+		</div>
+		<!-- <div class="formats"><div style="z-index: 150; color: white;position: absolute">tooltips</div></div> -->
+		<div style="z-index: 10" id="section4" class="formats">
+			<button class="textStyle" id="btn_PPRO57" onClick="evalScript('$._PPP_.markOutro()')"><div class="tooltip" id="tooltips">longer than</br>usual tooltip</div>Mark Outro</button>
+			<button class="controlBg textStyle" id="btn_PPRO58" onClick="evalScript('$._PPP_.renderOngoing()')">Render Draft</button>
+			<button style="background-color: red; color: white; display: none;" class="controlBg textStyle" id="master" onClick="evalScript('$._PPP_.renderMaster()')">Render Master</button>
+			<!-- <button class="textStyle" onClick="evalScript('$._PPP_.selectLabel()')">Select Label</button> -->
+		</div>
+	</div>
+
+	<div class="section">
+		<div onclick="elementShowHide('project')" class="section-header">
+			Project
+		</div>
+		<div id="project" class="formats">
+			<button class="textStyle" id="btn_PPRO57" onClick="evalScript('$._PPP_.saveIncremental()')">Save++</button>
+			<button class="textStyle" id="btn_PPRO57" onClick="evalScript('$._PPP_.exportAAF()')">Export AAF</button>
+		</div>
+	</div>
+
+	<div class="section">
+		<div onclick="elementShowHide('footage')" class="section-header" id="mm">
+			Footage
+		</div>
+		
+	<div id="footage" class="footage">
+		<div class="formats">
+			<button class="controlBg textStyle" id="scaleDown">-</button>
+			<button class="controlBg textStyle" id="rotateL">⭯</button>
+			<button class="textStyle" id="bla">Reset</button>
+			<button class="controlBg textStyle" id="rotateR">⭮</button>
+			<button class="controlBg textStyle" id="scaleUp">+</button>
+			<button class="hide" id="stitchusingdefaultpreset">Stitch selected files in AME</button>
+		</div>
+			<div id="joystick">
+				<button class="textStyle" id="drag">move</button>
+				
+			</div>
+	</div>
+
+	<div class="section">
+		<div class="hide" id="dragthing" draggable="true" ondragstart="dragHandler(event)">Drag and drop import</div>
+		<div onclick="elementShowHide('dimensions')" class="section-header" id="cc">
+			Formats
+		</div>
+		<div id="dimensions" class="formats">
+			<button id="p_landscape"><span class="landscape"></span></button>
+			<button id="p_portrait"><span class="portrait"></span></button>
+			<button id="p_square"><span class="square"></span></button>
+		</div class="formats">
+	</div>
+
+	<div class="section" draggable="true" ondragstart="dragOutro(event)">
+		<div onclick="elementShowHide('outroSection')" class="section-header">
+			Outro
+		</div>
+		<div id="outroSection" class="formats">
+			<select id="language" onchange="generatePath()">
+				<option label="English" value="1. English"></option>
+				<option label="German" value="2. German"></option>
+				<option label="Spanish" value="3. Spanish"></option>
+			</select>
+			<span id="kindContainer" onchange="generatePath()"></span>
+			<select id="outroDimensions">
+				<option value="">16:9</option>
+				<option value="">9:16</option>
+				<option value="">1:1</option>
+				<option value="">2:3</option>
+			</select>
+			<script>
+				var rootFolder = "Z:/ART/Assets/2. Video/3. Outro/";
+				// var rootFolder = "D:/_Projects/00_Temp/MoonActive/test Folder/3. Outro/"; 
+				var path = "";
+
+				generateDropdown("kind", "kindContainer", readDir(rootFolder), folderNameCleanup);	//searchbar
+				generatePath();
+
+				function generateLink(path){
+					generateDropdownLink("outroDimensions", path);
+				}
+				function dragOutro(event){
+					var outro = document.getElementById('outroDimensions').value; 
+					// alert(outro);
+					outroDragHandler(event, outro);
+				}
+			</script>		
+		</div>
+	</div>
+	<div class="section" draggable="true" ondragstart="dragSFX(event, tempFolder)">
+		<div id="sfxTitle" class="section-header">
+			Game SFX
+		</div>
+		<div id="sfxSection" class="formats">
+			<span id="category" onchange="genSPath(tempFolder)"></span>
+			<span id="files" onchange="setPause()"></span>
+			<div>
+			  <button class="textStyle" style="height: 22px; padding: 0px; margin: 6px; color: #009fff;" id="audioPlayer">►</button>
+			</div>
+
+			<audio id="player" src=''>
+			</audio>
+			<script>
+				var sfxFolder = "Z:/ART/Assets/1. Audio/1. Gameplay SFX/";
+				// var sfxFolder = "D:/Downloads/Audio/SFX/Video Copilot Motion Pules + Shockwave HD - Mr Walker/MotionPulse_BlackBox_24-Bit_Wav/IMPACT/";
+				var sfxFolder2 = "Z:/ART/Assets/1. Audio/2. Non-Gameplay SFX/";
+				// var sfxFolder2 = "D:/Downloads/Audio/SFX/Video Copilot Motion Pules + Shockwave HD - Mr Walker/MotionPulse_BlackBox_24-Bit_Wav/MACHINE/";
+				var spath = "";
+				var tempFolder = sfxFolder;
+
+				createElement(sfxFolder);
+
+				function createElement(path){
+					generateDropdown("sfx-category", "category", readDir(path));
+					genSPath(path)
+				}
+
+
+				var playButton = document.getElementById("audioPlayer");
+				var audio = document.getElementById("player");
+				audio.onended = function(){
+					setPause()
+				}
+
+				playButton.addEventListener("click", function(){
+				  if(audio.paused){
+					setPlay()
+				  } else {
+				    setPause()
+				  }
+				});
+
+				function setPlay(){
+					var src = generateLink(tempFolder);
+					audio.setAttribute("src", src);
+				    audio.play();
+				    playButton.innerHTML = "❚❚";
+				}
+
+				function setPause(){
+					audio.pause();
+				    playButton.innerHTML = "►";
+				}
+
+				function genSPath(sfxFolder){
+					var category = document.getElementById("sfx-category").value;				
+					spath = sfxFolder+category+"/"
+					var files = document.getElementById("files");
+					var filedd = document.getElementById("sfx-files");
+					if (filedd) files.removeChild(filedd);
+					// alert(spath)
+					generateFileDropdown("sfx-files", "files", readDir(spath));
+				}
+
+				function generateLink(path){
+					var category = document.getElementById("sfx-category").value;
+					var sound = document.getElementById('sfx-files').value;
+					path = path+category+"/"+sound;
+					return path;
+				}
+
+				function dragSFX(event, sfxFolder){
+					var link = generateLink(sfxFolder);
+					// alert(link);
+					outroDragHandler(event, link);
+				}
+
+				function reload(){
+					var parent = document.getElementById("category");
+					if (parent.childNodes[0]) parent.removeChild(parent.childNodes[0])
+					var files = document.getElementById("files");
+					if (files.childNodes[0]) files.removeChild(files.childNodes[0])
+					createElement(tempFolder);
+				}
+
+				function switchPath(currentPath){
+					var main = document.getElementById("sfxTitle");
+					var sfxFolder = "Z:/ART/Assets/1. Audio/1. Gameplay SFX/";
+					// var sfxFolder = "D:/Downloads/Audio/SFX/Video Copilot Motion Pules + Shockwave HD - Mr Walker/MotionPulse_BlackBox_24-Bit_Wav/IMPACT/";
+					var sfxFolder2 = "Z:/ART/Assets/1. Audio/2. Non-Gameplay SFX/";
+					// var sfxFolder2 = "D:/Downloads/Audio/SFX/Video Copilot Motion Pules + Shockwave HD - Mr Walker/MotionPulse_BlackBox_24-Bit_Wav/MACHINE/";
+					if (currentPath == sfxFolder){
+						tempFolder = sfxFolder2
+						main.innerHTML = "Non Game SFX"
+					} else {
+						tempFolder = sfxFolder
+						main.innerHTML = "Game SFX"
+					}
+					reload()
+				}
+
+			</script>		
+		</div>
+	</div>
+
+		<div class="formats" id ="footer">
+			<button class="override" style="border: none; width: 100%; color: #333; z-index: 100" onClick="javascript:history.go(0)">⭮ reload</button>
+		</div>
+
+</div>
+</body>
+
+	<script>
+		var startX = 0;
+		var startY = 0;
+		var moveInProgress = false;
+
+		$('#drag').on('mousedown', function (e) {
+			evalScript('$._PPP_.getPos()')
+			// evalScript('$._PPP_.changePos()')
+		    startX = e.pageY;
+		    startY = e.pageX;
+		    moveInProgress = true
+		})
+
+		$('body').on('mouseup', function (e) {
+			moveInProgress = false
+			evalScript('$._PPP_.dragEnd()')
+		})
+
+		$('body').on('mousemove', function (e) {
+			if (moveInProgress) {
+				var y = startX - e.pageY;
+				var x = startY - e.pageX; 
+				x /= 1000;
+				y /= 1000;
+
+				var s = '$._PPP_.changePos('+x+','+y+')'
+				console.log(s)
+				evalScript(s)
+
+			}
+		});
+
+	</script>
+
+<script>
+
+	$('#scaleDown').click(function(e){
+		if (e.shiftKey) {
+			evalScript('$._PPP_.scaleFootage(10, false)')
+	  	} 
+	  	else if (e.altKey) {
+			evalScript('$._PPP_.scaleFootage(1, false)')
+	  	}
+	  	else {
+	  		evalScript('$._PPP_.scaleFootage(5, false)')
+	  	}
+	});
+
+	$('#scaleUp').click(function(e){
+		if (e.shiftKey) {
+			evalScript('$._PPP_.scaleFootage(10, true)')
+	  	} 
+	  	else if (e.altKey) {
+			evalScript('$._PPP_.scaleFootage(1, true)')
+	  	}
+	  	else {
+	  		evalScript('$._PPP_.scaleFootage(5, true)')
+	  	}
+	});
+
+	$('#sfxTitle').click(function(e){
+		if (e.ctrlKey) {
+			switchPath(tempFolder)
+	  	}
+	  	else {
+	  		elementShowHide('sfxSection')
+	  	}
+	});
+
+	$('#p_square').click(function(e){
+		document.getElementById("outroDimensions").selectedIndex = "2";
+		document.getElementById("watermarkDimensions").selectedIndex = "2";
+		if (e.ctrlKey) {
+			evalScript('$._PPP_.duplicate(1080, 1080, "_Square")')
+	  	}
+	  	else {
+	  		evalScript('$._PPP_.setCompSize(1080, 1080)')
+	  	}
+		});
+
+	$('#p_portrait').click(function(e){
+		document.getElementById("outroDimensions").selectedIndex = "1";
+		document.getElementById("watermarkDimensions").selectedIndex = "1";
+	  	if (e.ctrlKey) {
+	  		evalScript('$._PPP_.duplicate(1080, 1920, "_Portrait")');
+	  		evalScript('$._PPP_.rotateAdjustments()');
+	  		evalScript('$._PPP_.rotateMultcams()');
+	  	}
+	  	else if (e.shiftKey) {
+	  		document.getElementById("outroDimensions").selectedIndex = "3";
+	  		document.getElementById("watermarkDimensions").selectedIndex = "3";
+	  		evalScript('$._PPP_.setCompSize(1080, 1620)');
+	  	}
+	  	else {
+			evalScript('$._PPP_.setCompSize(1080, 1920)');
+	  	}
+	});
+
+	$('#p_landscape').click(function(e){
+		document.getElementById("outroDimensions").selectedIndex = "0";
+		document.getElementById("watermarkDimensions").selectedIndex = "0";
+		if (e.ctrlKey) {
+			// getStyleSheet('stylesheet', '.landscape').style.cursor = "cell";
+			evalScript('$._PPP_.duplicate(1920, 1080, "_Landscape")')
+		}
+		else {
+			evalScript('$._PPP_.setCompSize(1920, 1080)')
+		}
+	});  
+
+	$('#bla').click(function(e){
+		if (e.ctrlKey) {
+			evalScript('$._PPP_.resetFootage("100")')
+		}
+		else {
+			evalScript("$._PPP_.resetFootage('fit')")
+		}
+	});  
+
+	$('#rotateL').click(function(e){
+		if (e.ctrlKey && e.ShiftKey) {
+			evalScript('$._PPP_.rotateFootage($._PPP_.getAllClips(), -90)')
+		}    	
+		else if (e.ctrlKey) {
+			evalScript('$._PPP_.rotateFootage($._PPP_.getMulticams(5), -90)')
+		}
+		else {
+			evalScript('$._PPP_.rotateFootage($._PPP_.getSelectedClips(), -90)')
+		}
+	});  
+
+	$('#rotateR').click(function(e){
+		if (e.ctrlKey && e.ShiftKey) {
+			evalScript('$._PPP_.rotateFootage($._PPP_.getAllClips(), 90)')
+		}    	
+		else if (e.ctrlKey) {
+			evalScript('$._PPP_.rotateFootage($._PPP_.getMulticams(5), 90)')
+		}
+		else {
+			evalScript('$._PPP_.rotateFootage($._PPP_.getSelectedClips(), 90)')
+		}
+	});  
+
+</script>
+<script>
+	document.body.onbeforeunload = function () {
+		var csInterface = new CSInterface();
+		var OSVersion = csInterface.getOSInformation();
+		var appVersion = csInterface.hostEnvironment.appVersion;
+		var versionAsFloat = parseFloat(appVersion);
+		
+		csInterface.evalScript('$._PPP_.closeLog()');
+
+		if (versionAsFloat < 10.3) {
+			var path = "file:///Library/Application Support/Adobe/CEP/extensions/PProPanel/payloads/onbeforeunload.html";
+
+			if (OSVersion.indexOf("Windows") >= 0) {
+				path =
+					"file:///C:/Program%20Files%20(x86)/Common%20Files/Adobe/CEP/extensions/PProPanel/payloads/onbeforeunload.html"
+			}
+			csInterface.openURLInDefaultBrowser(path);
+		}
+	};
+</script>
+</html>
