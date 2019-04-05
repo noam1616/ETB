@@ -116,28 +116,35 @@
 	</div>
 
 	<div class="section">
-		<div onclick="elementShowHide('footage')" class="section-header" id="mm">
+
+		<div onclick="elementShowHide('footage')" class="section-header">
+
 			Footage
+			
 		</div>
 		
-	<div id="footage" class="footage">
-		<div class="formats">
-			<button class="controlBg textStyle" id="scaleDown">-</button>
-			<button class="controlBg textStyle" id="rotateL">⭯</button>
-			<button class="textStyle" id="bla">Reset</button>
-			<button class="controlBg textStyle" id="rotateR">⭮</button>
-			<button class="controlBg textStyle" id="scaleUp">+</button>
-			<button class="hide" id="stitchusingdefaultpreset">Stitch selected files in AME</button>
-		</div>
+		<div id="footage" class="footage">
+
+			<div class="formats">
+				<button class="controlBg textStyle" id="scaleDown">-</button>
+				<button class="controlBg textStyle" id="rotateL">⭯</button>
+				<button class="textStyle" id="bla">Reset</button>
+				<button class="controlBg textStyle" id="rotateR">⭮</button>
+				<button class="controlBg textStyle" id="scaleUp">+</button>
+				<button class="hide" id="stitchusingdefaultpreset">Stitch selected files in AME</button>
+			</div>
+
 			<div id="joystick">
 				<button class="textStyle" id="drag">move</button>
 				
 			</div>
+
+		</div>
 	</div>
 
 	<div class="section">
 		<div class="hide" id="dragthing" draggable="true" ondragstart="dragHandler(event)">Drag and drop import</div>
-		<div onclick="elementShowHide('dimensions')" class="section-header" id="cc">
+		<div onclick="elementShowHide('dimensions')" class="section-header">
 			Formats
 		</div>
 		<div id="dimensions" class="formats">
