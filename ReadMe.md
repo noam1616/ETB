@@ -1,4 +1,4 @@
-![CMLogo](payloads/logo.png)
+![CMLogo](payloads/cmlogo.png)
 
 # Create panels for Premiere Pro
 
