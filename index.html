@@ -31,25 +31,26 @@
 
 <body onLoad="onLoaded()">
 
+	<div id="dark-bg">
+		
+	</div>
+
 	<div>
-		<!-- <button style="border: none; color: #009fff; z-index: 150; position: absolute;top: 10px; left: 10px" onClick="elementShowHide('tooltips')">⚙ Settings</button> -->
-		<!-- <div id="tooltips" style="background-color: rgba(23, 22, 22, 0.58); position: fixed; width: 100%; height: 100%; z-index: 100;display: none;" onClick="elementShowHide('tooltips')">settings</div> -->
-		<!-- <div id="settings" style="background-color: rgba(23, 22, 22, 0.58); position: fixed; width: 100%; height: 30%; z-index: 100;display: none;" onClick="elementShowHide('settings')">settings</div> -->
-			<div class="hide">
-				<select id="logoPosition">
-					<option label="upper left" value="_A"></option>
-					<option label="upper right" value="_B"></option>
-					<option label="lower left" value="_D"></option>
-					<option label="lower right" value="_C"></option>
-				</select>
-				<select id="watermarkDimensions">
-					<option value="Landscape">16:9</option>
-					<option value="Portrait">9:16</option>
-					<option value="Square">1:1</option>
-					<option value="2-3">2:3</option>
-				</select>
-			</div>
+		<div class="hide">
+			<select id="logoPosition">
+				<option label="upper left" value="_A"></option>
+				<option label="upper right" value="_B"></option>
+				<option label="lower left" value="_D"></option>
+				<option label="lower right" value="_C"></option>
+			</select>
+			<select id="watermarkDimensions">
+				<option value="Landscape">16:9</option>
+				<option value="Portrait">9:16</option>
+				<option value="Square">1:1</option>
+				<option value="2-3">2:3</option>
+			</select>
 		</div>
+	</div>
 <div class="panelContainer">
 <div class="header">
 		<img onclick="elementShowHide('logoPlacement')" style="z-index: 10" id=logo src="./payloads/cmlogo.png" draggable="true" ondragstart="genPath(event)">
@@ -289,32 +290,34 @@
 	</div>
 
 		<div class="formats" id ="footer">
-			<button class="override" style="border: none; width: 100%; color: #333; z-index: 100" onClick="javascript:history.go(0)">⭮ reload</button>
+			<button class="override" style="border: none; width: 100%; color: #333; z-index: 150" onClick="javascript:history.go(0)">⭮ reload</button>
 		</div>
 
 </div>
 </body>
 
 	<script>
+		var darken = document.getElementById('dark-bg');
 		var startX = 0;
 		var startY = 0;
 		var moveInProgress = false;
 
 		$('#drag').on('mousedown', function (e) {
 			evalScript('$._PPP_.getPos()')
-			// evalScript('$._PPP_.changePos()')
 		    startX = e.pageY;
 		    startY = e.pageX;
 		    moveInProgress = true
 		})
 
 		$('body').on('mouseup', function (e) {
+			$('#dark-bg').css('display', 'none')
 			moveInProgress = false
 			evalScript('$._PPP_.dragEnd()')
 		})
 
 		$('body').on('mousemove', function (e) {
 			if (moveInProgress) {
+				$('#dark-bg').css('display', 'inline')
 				var y = startX - e.pageY;
 				var x = startY - e.pageX; 
 				x /= 1000;
@@ -325,6 +328,12 @@
 				evalScript(s)
 
 			}
+		})
+
+		$('body').mouseleave(function() {
+		   $('#dark-bg').css('display', 'none')
+			moveInProgress = false
+			evalScript('$._PPP_.dragEnd()')
 		});
 
 	</script>

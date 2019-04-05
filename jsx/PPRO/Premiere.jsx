@@ -100,12 +100,12 @@ $._PPP_={
 			var position = clip.name.split('_._._')[1].split(',');
 			position[0] -= x;
 			position[1] -= y;
-			try{
 				clip.components[1].properties[0].setValue(position, true)
+			/*try{
 			} catch (err) {
 				pos = position.join(',').toString()
 				clip.components[1].properties[0].setValue(pos, true)
-			}
+			}*/
 			// clip.components[1].properties[0].setValue(position, true)
 
 		})

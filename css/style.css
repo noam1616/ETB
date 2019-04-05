@@ -12,6 +12,16 @@
 * written permission of Adobe. 
 **************************************************************************/
 
+#dark-bg {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 50;
+    background-color: #000;
+    opacity: .75;
+    display: none;
+}
+
 .footage {
     display: flex;
     flex-direction: column;
@@ -22,10 +32,12 @@
 
 #drag {
     cursor: move;
+    z-index: 75;
 }
 
 #joystick {
-    width: 75%;
+    width: 100px;
+    max-width: 100px;
     height: 100px;
     display: flex;
     align-items: center;
