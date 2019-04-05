@@ -35,8 +35,6 @@
 
 #drag {
     cursor: move;
-    z-index: 75;
-    /*font-size: .8rem;*/
 }
 
 #joystick {
@@ -149,6 +147,11 @@ button:hover, button.hover {
     padding: 5px;
     border: 2px solid;
     background-color: rgba(0, 159, 255, 0.42);
+}
+
+button.hover {
+    z-index: 175;
+    cursor: move;    
 }
 
 button:focus {

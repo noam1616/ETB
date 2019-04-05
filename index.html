@@ -304,15 +304,23 @@
 </body>
 
 	<script>
-		var darken = document.getElementById('dark-bg');
-		var startX = 0;
-		var startY = 0;
-		var moveInProgress = false;
+		var darken = document.getElementById('dark-bg')
+			,startX = 0
+			,startY = 0
+			,dragPosition = false
+			,dragScale = false
+			,dragRotation = false
 
 		function end () {
 			$('#dark-bg').css({'opacity': '0', 'z-index': '-1', 'cursor': 'default'})
 			$('#drag').eq(0).removeClass('hover');
-			moveInProgress = false
+			$('#scaleDown').eq(0).removeClass('hover');
+			$('#scaleUp').eq(0).removeClass('hover');
+			$('#rotateL').eq(0).removeClass('hover');
+			$('#rotateR').eq(0).removeClass('hover');
+			dragPosition = false
+			dragScale = false
+			dragRotation = false
 			evalScript('$._PPP_.dragEnd()')
 		}
 
@@ -320,7 +328,19 @@
 			evalScript('$._PPP_.getPos()')
 		    startX = e.pageY;
 		    startY = e.pageX;
-		    moveInProgress = true
+		    dragPosition = true
+		})
+
+		$('#scaleUp, #scaleDown').on('mousedown', function (e) {
+		    startX = e.pageY;
+		    startY = e.pageX;
+		    dragScale = true
+		})
+
+		$('#rotateL, #rotateR').on('mousedown', function (e) {
+		    startX = e.pageY;
+		    startY = e.pageX;
+		    dragRotation = true
 		})
 
 		$('body').on('mouseup', function (e) {
@@ -332,18 +352,68 @@
 		})
 
 		$('body').on('mousemove', function (e) {
-			if (moveInProgress) {
+
+			if (dragPosition) {
+
 				$('#dark-bg').css({'opacity': '0.75', 'z-index': '50', 'cursor': 'move'})
-				$('#drag').eq(0).addClass('hover');
-				var y = startX - e.pageY;
-				var x = startY - e.pageX; 
-				x /= 1000;
-				y /= 1000;
+				$('#drag').eq(0).addClass('hover')
+				 var y = startX - e.pageY
+					,x = startY - e.pageX
+						y /= 1000
+						x /= 1000
+
+				if (e.shiftKey) {
+					y *= 10
+					x *= 10
+			  	} 
+			  	else if (e.altKey) {
+					y /=10
+					x /=10
+			  	}
 
 				var s = '$._PPP_.changePos('+x+','+y+')'
 				console.log(s)
 				evalScript(s)
 
+			} else if (dragScale) {
+
+				$('#dark-bg').css({'opacity': '0.75', 'z-index': '50', 'cursor': 'move'})
+				$('#scaleDown').eq(0).addClass('hover')
+				$('#scaleUp').eq(0).addClass('hover')
+				 var y = startX - e.pageY
+					,x = startY - e.pageX
+						y /= -100
+						x /= 100
+						y += x
+
+				if (e.shiftKey) {
+					y *= 10
+			  	} 
+			  	else if (e.altKey) {
+					y /=10
+			  	}
+
+				evalScript('$._PPP_.scaleFootage('+y+')')
+
+			} else if (dragRotation) {
+
+				$('#dark-bg').css({'opacity': '0.75', 'z-index': '50', 'cursor': 'move'})
+				$('#rotateL').eq(0).addClass('hover')
+				$('#rotateR').eq(0).addClass('hover')
+				 var y = startX - e.pageY
+					,x = startY - e.pageX
+						y /= -100
+						x /= 100
+						y += x
+
+				if (e.shiftKey) {
+					y *= 10
+			  	} 
+			  	else if (e.altKey) {
+					y /=10
+			  	}
+
+				evalScript('$._PPP_.rotateFootage($._PPP_.getSelectedClips(),'+y+')')	
 			}
 		})
 
