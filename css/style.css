@@ -13,13 +13,16 @@
 **************************************************************************/
 
 #dark-bg {
+    align-self: center;
+    vertical-align: center;
+    transition: opacity 0.2s, z-index 0.3s;
     width: 100%;
     height: 100%;
     position: fixed;
-    z-index: 50;
+    z-index: -1;
     background-color: #000;
-    opacity: .75;
-    display: none;
+    opacity: 0;
+    /*display: none;*/
 }
 
 .footage {
@@ -33,6 +36,7 @@
 #drag {
     cursor: move;
     z-index: 75;
+    /*font-size: .8rem;*/
 }
 
 #joystick {
@@ -122,6 +126,7 @@ img {
 }
 
 button {
+    transition: 0.2s;
     font-family: arial, sans-serif;
     color: #aba4a4;
     font-size: 11px;
@@ -135,11 +140,11 @@ button {
 }
 
 button.textStyle {
-    height: 30px;
+    min-height: 30px;
     border-radius: 20px;
 }
 
-button:hover {
+button:hover, button.hover {
     color: #009fff;
     padding: 5px;
     border: 2px solid;

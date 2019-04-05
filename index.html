@@ -135,7 +135,7 @@
 			</div>
 
 			<div id="joystick">
-				<button class="textStyle" id="drag">move</button>
+				<button class="textStyle" id="drag">⇳ Move</button>
 				
 			</div>
 
@@ -309,6 +309,13 @@
 		var startY = 0;
 		var moveInProgress = false;
 
+		function end () {
+			$('#dark-bg').css({'opacity': '0', 'z-index': '-1', 'cursor': 'default'})
+			$('#drag').eq(0).removeClass('hover');
+			moveInProgress = false
+			evalScript('$._PPP_.dragEnd()')
+		}
+
 		$('#drag').on('mousedown', function (e) {
 			evalScript('$._PPP_.getPos()')
 		    startX = e.pageY;
@@ -317,14 +324,17 @@
 		})
 
 		$('body').on('mouseup', function (e) {
-			$('#dark-bg').css('display', 'none')
-			moveInProgress = false
-			evalScript('$._PPP_.dragEnd()')
+			end()
+		})
+
+		$('body').mouseleave(function(e) {
+		   end()
 		})
 
 		$('body').on('mousemove', function (e) {
 			if (moveInProgress) {
-				$('#dark-bg').css('display', 'inline')
+				$('#dark-bg').css({'opacity': '0.75', 'z-index': '50', 'cursor': 'move'})
+				$('#drag').eq(0).addClass('hover');
 				var y = startX - e.pageY;
 				var x = startY - e.pageX; 
 				x /= 1000;
@@ -336,12 +346,6 @@
 
 			}
 		})
-
-		$('body').mouseleave(function() {
-		   $('#dark-bg').css('display', 'none')
-			moveInProgress = false
-			evalScript('$._PPP_.dragEnd()')
-		});
 
 	</script>
 

@@ -76,12 +76,7 @@ $._PPP_={
 		var pos = []
 		$._PPP_.forEachClip(clips, function(clip){
 			var position = clip.components[1].properties[0].getValue();
-			try {
-				clip.name += '_._._'+position.join(',')
-			} catch (err) {
-				clip.name += '_._._'+position
-			}
-
+			clip.name += '_._._'+position.join(',')
 		})
 	},
 
@@ -96,18 +91,10 @@ $._PPP_={
 		var clips = $._PPP_.getSelectedClips();
 		// add to settings
 		$._PPP_.forEachClip(clips, function(clip){
-			// var position = clip.components[1].properties[0].getValue().split(',');
 			var position = clip.name.split('_._._')[1].split(',');
 			position[0] -= x;
 			position[1] -= y;
-				clip.components[1].properties[0].setValue(position, true)
-			/*try{
-			} catch (err) {
-				pos = position.join(',').toString()
-				clip.components[1].properties[0].setValue(pos, true)
-			}*/
-			// clip.components[1].properties[0].setValue(position, true)
-
+			clip.components[1].properties[0].setValue(position, true)
 		})
 	},
 
@@ -118,11 +105,7 @@ $._PPP_={
 		if ( add != true ) s *= -1;
 		$._PPP_.forEachClip(clips, function(clip){
 			var scale = clip.components[1].properties[1].getValue();
-			try {
-				clip.components[1].properties[1].setValue((scale+s),1)
-			} catch (err) {
-				clip.components[1].properties[1].setValue((Number(scale)+s).toString(), true)
-			}
+			clip.components[1].properties[1].setValue((scale+s),1)
 		})
 	},
 
@@ -308,16 +291,9 @@ $._PPP_={
 			if (hd == "fit") {
 				hd = $._PPP_.scaleToFrame(clip)
 			}
-			try{
-			    props[0].setValue([0.5,0.5]);
-			    props[1].setValue(Number (hd));
-			    if ( x > y ) props[4].setValue(0, 1);
-			}
-			catch(err){
-				props[0].setValue("0.5,0.5");
-				props[1].setValue(hd.toString(), true);
-				if ( x > y ) props[4].setValue("0", true);
-			}
+		    props[0].setValue([0.5,0.5]);
+		    props[1].setValue(Number (hd));
+		    if ( x > y ) props[4].setValue(0, 1);
 		})
 	},
 
@@ -362,49 +338,27 @@ $._PPP_={
 	    collection = $._PPP_.getMulticams(5);
 	    $._PPP_.forEachClip(collection, function(clip){
 	    var props = clip.components[1].properties;
-	    try {
 	    	props[0].setValue([0.5,0.5]);
 	    	props[1].setValue(50);
 	    	props[4].setValue(90,1);
-	    }
-	    catch (err) {
-		    props[0].setValue("0.5,0.5");
-		    props[1].setValue("50");
-		    props[4].setValue("90,1");
-	    }
 	    })
 	},
 
 	rotateFootage : function(clips, add){
 	    collection = clips;
 	    $._PPP_.forEachClip(collection, function(clip){
-	    var props = clip.components[1].properties;
-	    var rot = props[4].getValue();
-	    rot = $._PPP_.addRotation(rot, add);
-	    try {
-	    	props[4].setValue(Number (rot),true);
-	    }
-	    catch (err) {
+		    var props = clip.components[1].properties;
+		    var rot = props[4].getValue();
+		    rot += add;
 	    	props[4].setValue(rot,true);
-	    }
 	    })
-	},
-
-	addRotation : function(current, add){
-		var newValue = String (Object (add + Number (current)));
-		return newValue;
 	},
 
 	rotateAdjustments : function(){
 	    collection = $._PPP_.getMulticams(3);
 	    $._PPP_.forEachClip(collection, function(clip){
 	    var props = clip.components[1].properties;
-	    try {
-	    	props[4].setValue(90,1);
-	    }
-	    catch (err) {
-	    	props[4].setValue("90,1");
-	    }
+    	props[4].setValue(90,1);
 	    })
 	},
 
