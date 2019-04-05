@@ -1,3 +1,5 @@
+![CMLogo](payloads/logo.png)
+
 # Create panels for Premiere Pro
 
 *Last updated October 2018, current released version = Premiere Pro 13.0, also known as "Premiere Pro CC 2019".
@@ -75,7 +77,6 @@ defaults write /Users/<username>/Library/Preferences/com.adobe.CSXS.9.plist Play
 
 On Windows, make the following registry entry (a new Key, of type String):
 
-![Registry image](payloads/Registry.png)
 
 ## 3. Put panel into extensions directory
 
