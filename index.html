@@ -206,8 +206,7 @@
 			<script>
 				var sfxFolder = "Z:/ART/Assets/1. Audio/1. Gameplay SFX/";
 				// var sfxFolder = "D:/Downloads/Audio/SFX/Video Copilot Motion Pules + Shockwave HD - Mr Walker/MotionPulse_BlackBox_24-Bit_Wav/IMPACT/";
-				var sfxFolder2 = "Z:/ART/Assets/1. Audio/2. Non-Gameplay SFX/";
-				// var sfxFolder2 = "D:/Downloads/Audio/SFX/Video Copilot Motion Pules + Shockwave HD - Mr Walker/MotionPulse_BlackBox_24-Bit_Wav/MACHINE/";
+
 				var spath = "";
 				var tempFolder = sfxFolder;
 
@@ -277,18 +276,32 @@
 				}
 
 				function switchPath(currentPath){
-					var main = document.getElementById("sfxTitle");
-					var sfxFolder = "Z:/ART/Assets/1. Audio/1. Gameplay SFX/";
-					// var sfxFolder = "D:/Downloads/Audio/SFX/Video Copilot Motion Pules + Shockwave HD - Mr Walker/MotionPulse_BlackBox_24-Bit_Wav/IMPACT/";
-					var sfxFolder2 = "Z:/ART/Assets/1. Audio/2. Non-Gameplay SFX/";
-					// var sfxFolder2 = "D:/Downloads/Audio/SFX/Video Copilot Motion Pules + Shockwave HD - Mr Walker/MotionPulse_BlackBox_24-Bit_Wav/MACHINE/";
-					if (currentPath == sfxFolder){
-						tempFolder = sfxFolder2
-						main.innerHTML = "Non Game SFX"
-					} else {
-						tempFolder = sfxFolder
-						main.innerHTML = "Game SFX"
+					var current = currentPath.split('/')
+
+					var main = document.getElementById("sfxTitle"),
+						base = "Z:/ART/Assets/1. Audio/",
+						serial = 1
+						end = [
+							[0, "1. Gameplay SFX", 'Gameplay SFX'],
+							[1, "2. Non-Gameplay SFX", 'Non-Gameplay SFX'],
+							[2, "3. Music", 'Music']
+						]
+
+					console.log(end[0][1]);
+
+					for (var i = 0; i < end.length; i++) {
+						if (current.includes(end[i][1])) {
+							serial = end[i][0]+1
+							if (serial > end.length-1) {
+								serial = 0
+							}
+						}
 					}
+					
+					tempFolder = base+end[serial][1]+'/'
+
+					main.innerHTML = end[serial][2]
+
 					reload()
 				}
 
@@ -312,10 +325,12 @@
 			,dragRotation = false
 
 		function end () {
-			$('#dark-bg').css({'opacity': '0', 'z-index': '-1', 'cursor': 'default'})
-			$('#drag, #scaleUp, #scaleDown, #rotateL, #rotateR').removeClass('hover');
-			dragPosition = dragScale = dragRotation = false
-			evalScript('$._PPP_.dragEnd()')
+			if (dragPosition || dragScale || dragRotation) {
+				$('#dark-bg').css({'opacity': '0', 'z-index': '-1', 'cursor': 'default'})
+				$('#drag, #scaleUp, #scaleDown, #rotateL, #rotateR').removeClass('hover');
+				dragPosition = dragScale = dragRotation = false
+				evalScript('$._PPP_.dragEnd()')
+			}
 		}
 
 		$('#drag, #scaleUp, #scaleDown, #rotateL, #rotateR').on('mousedown', function (e) {

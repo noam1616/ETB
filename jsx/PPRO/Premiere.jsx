@@ -72,6 +72,7 @@ $._PPP_={
 	},
 
 	dataToName : function () {
+		app.enableQE()
 		var clips = $._PPP_.getSelectedClips();
 		var pos = []
 		$._PPP_.forEachClip(clips, function(clip){
