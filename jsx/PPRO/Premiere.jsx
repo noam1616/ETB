@@ -71,12 +71,14 @@ $._PPP_={
 		}
 	},
 
-	getPos : function () {
+	dataToName : function () {
 		var clips = $._PPP_.getSelectedClips();
 		var pos = []
 		$._PPP_.forEachClip(clips, function(clip){
 			var position = clip.components[1].properties[0].getValue();
-			clip.name += '_._._'+position.join(',')
+			var rotation = clip.components[1].properties[4].getValue();
+			var scale = clip.components[1].properties[1].getValue();
+			clip.name += '_._._'+position+'_._._'+rotation+'_._._'+scale
 		})
 	},
 
@@ -89,12 +91,29 @@ $._PPP_={
 
 	changePos : function (x,y) {
 		var clips = $._PPP_.getSelectedClips();
-		// add to settings
 		$._PPP_.forEachClip(clips, function(clip){
 			var position = clip.name.split('_._._')[1].split(',');
 			position[0] -= x;
 			position[1] -= y;
 			clip.components[1].properties[0].setValue(position, true)
+		})
+	},
+
+	changeRot : function (y) {
+		var clips = $._PPP_.getSelectedClips();
+		$._PPP_.forEachClip(clips, function(clip){
+			var rotation = clip.name.split('_._._')[2];
+			rotation -= y;
+			clip.components[1].properties[4].setValue(rotation, true)
+		})
+	},
+
+	changeScl : function (y) {
+		var clips = $._PPP_.getSelectedClips();
+		$._PPP_.forEachClip(clips, function(clip){
+			var scale = clip.name.split('_._._')[3];
+			scale -= y;
+			clip.components[1].properties[1].setValue(scale, true)
 		})
 	},
 

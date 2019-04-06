@@ -313,33 +313,26 @@
 
 		function end () {
 			$('#dark-bg').css({'opacity': '0', 'z-index': '-1', 'cursor': 'default'})
-			$('#drag').eq(0).removeClass('hover');
-			$('#scaleDown').eq(0).removeClass('hover');
-			$('#scaleUp').eq(0).removeClass('hover');
-			$('#rotateL').eq(0).removeClass('hover');
-			$('#rotateR').eq(0).removeClass('hover');
-			dragPosition = false
-			dragScale = false
-			dragRotation = false
+			$('#drag, #scaleUp, #scaleDown, #rotateL, #rotateR').removeClass('hover');
+			dragPosition = dragScale = dragRotation = false
 			evalScript('$._PPP_.dragEnd()')
 		}
 
-		$('#drag').on('mousedown', function (e) {
-			evalScript('$._PPP_.getPos()')
+		$('#drag, #scaleUp, #scaleDown, #rotateL, #rotateR').on('mousedown', function (e) {
+			evalScript('$._PPP_.dataToName()')
 		    startX = e.pageY;
 		    startY = e.pageX;
+		})
+
+		$('#drag').on('mousedown', function (e) {
 		    dragPosition = true
 		})
 
 		$('#scaleUp, #scaleDown').on('mousedown', function (e) {
-		    startX = e.pageY;
-		    startY = e.pageX;
 		    dragScale = true
 		})
 
 		$('#rotateL, #rotateR').on('mousedown', function (e) {
-		    startX = e.pageY;
-		    startY = e.pageX;
 		    dragRotation = true
 		})
 
@@ -353,14 +346,11 @@
 
 		$('body').on('mousemove', function (e) {
 
-			if (dragPosition) {
+			if (dragPosition || dragScale || dragRotation) {
 
 				$('#dark-bg').css({'opacity': '0.75', 'z-index': '50', 'cursor': 'move'})
-				$('#drag').eq(0).addClass('hover')
-				 var y = startX - e.pageY
-					,x = startY - e.pageX
-						y /= 1000
-						x /= 1000
+				 var y = (startX - e.pageY) / 10
+					,x = (startY - e.pageX) / 10
 
 				if (e.shiftKey) {
 					y *= 10
@@ -371,50 +361,32 @@
 					x /=10
 			  	}
 
-				var s = '$._PPP_.changePos('+x+','+y+')'
-				console.log(s)
-				evalScript(s)
+			  	if (dragPosition){
 
-			} else if (dragScale) {
+					$('#drag').addClass('hover')
+					y /= 100
+					x /= 100
+					evalScript('$._PPP_.changePos('+x+','+y+')')
 
-				$('#dark-bg').css({'opacity': '0.75', 'z-index': '50', 'cursor': 'move'})
-				$('#scaleDown').eq(0).addClass('hover')
-				$('#scaleUp').eq(0).addClass('hover')
-				 var y = startX - e.pageY
-					,x = startY - e.pageX
-						y /= -100
-						x /= 100
-						y += x
+				} else if (dragScale) {
 
-				if (e.shiftKey) {
-					y *= 10
-			  	} 
-			  	else if (e.altKey) {
-					y /=10
+					$('#scaleDown').addClass('hover')
+					$('#scaleUp').addClass('hover')
+					y *= -1
+					y += x
+					evalScript('$._PPP_.changeScl('+y+')')
+
+				} else if (dragRotation) {
+
+					$('#rotateL').addClass('hover')
+					$('#rotateR').addClass('hover')
+					y *= -1
+					y += x
+					evalScript('$._PPP_.changeRot('+y+')')	
+				}
 			  	}
 
-				evalScript('$._PPP_.scaleFootage('+y+')')
 
-			} else if (dragRotation) {
-
-				$('#dark-bg').css({'opacity': '0.75', 'z-index': '50', 'cursor': 'move'})
-				$('#rotateL').eq(0).addClass('hover')
-				$('#rotateR').eq(0).addClass('hover')
-				 var y = startX - e.pageY
-					,x = startY - e.pageX
-						y /= -100
-						x /= 100
-						y += x
-
-				if (e.shiftKey) {
-					y *= 10
-			  	} 
-			  	else if (e.altKey) {
-					y /=10
-			  	}
-
-				evalScript('$._PPP_.rotateFootage($._PPP_.getSelectedClips(),'+y+')')	
-			}
 		})
 
 	</script>
