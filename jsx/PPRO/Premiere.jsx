@@ -312,8 +312,9 @@ $._PPP_={
 				hd = $._PPP_.scaleToFrame(clip)
 			}
 		    props[0].setValue([0.5,0.5]);
-		    props[1].setValue(Number (hd));
-		    if ( x > y ) props[4].setValue(0, 1);
+		    props[1].setValue(hd, true);
+		    if ( x > y ) props[4].setValue(0, 1)
+		    	
 		})
 	},
 

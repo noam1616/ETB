@@ -166,15 +166,15 @@ function generateFileDropdown(id, parent, array, doSomething){
 	select.setAttribute("id", id);
 	var options = array;
 	options = filterExt(options);
-	for (var i = 0; i < options.length; i++) {
-		var option = document.createElement("option");
-		option.label = options[i];
-		option.value = options[i];
-		option.label = option.label.replace(/_/gi, " ").replace(/.wav/, "");
-		select.add(option);
-		document.getElementById(parent).appendChild(select);
-		
-	}
+		for (var i = 0; i < options.length; i++) {
+			var option = document.createElement("option");
+			option.label = options[i];
+			option.value = options[i];
+			option.label = option.label.replace(/_/gi, " ").replace(/.wav/, "");
+			select.add(option);
+			document.getElementById(parent).appendChild(select);		
+		}
+	
 }
 
 function filterExt(array) {
