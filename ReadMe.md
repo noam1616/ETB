@@ -6,7 +6,7 @@ Here's a quick scan of the options this panel offers:
 
 # The Coin Master logo
 
-### The logo makes this panel look nice, but it's also functional:
+##### The logo makes this panel look nice, but it's also functional:
 click the logo to reveal corner selection.
 drag the logo into the timeline to add.
 
