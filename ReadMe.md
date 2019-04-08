@@ -18,13 +18,28 @@ occasionally dragging into the timeline doesn't work. I'm not sure exactly why. 
 ![RM_timeline](payloads/RM_timeline.png)
 
 #### Mark Outro
-    `Mark Outro` is an important step in making life easier for our editors. This button will add a marker named `outro` to the timeline, allowing us later to     grammatically locate and replace the outro when localizing the videos, with no need to open Premiere.
+`Mark Outro` is an important step in making life easier for our editors. This button will add a marker named `outro` to the timeline, allowing us later to     grammatically locate and replace the outro when localizing the videos, with no need to open Premiere.
 
 #### Render Draft
 `Render Draft` will do the following:
+- Create a new folder inside `Z:/ART/Projects/<project folder>/07. Render/03. Ongoing Versions` with today's date as a name.
+- Render the timeline using a h.264 preset. if in/out markers are present these will be used. otherwise it will go by the work area.
+- Create a subfolder named `PPP` and place a copy of the project there.
+
+#### Render Master [hidden]
+The `Render Master` button is hidden and will appear when you click the **Timeline** title.
+It will render a master file (uncompressed *quicktime animation*) into `Z:/ART/Projects/<project folder>/07. Render/05. Master`. 
+    **rendering a master is not an everyday task. render a master only once all necessary approvals has been given and the video is finalized.**
+    *don't forget to `Mark Outro` before rendering a master video.*
 
 ## Project
 ![RM_project](payloads/RM_project.png)
+
+#### Save++
+`Save++` is equivalent to After Effect's `save incremental`. It's essentially a quick "Save As" command, locating the current project file and preforming a "Save As" to the same location, adding an incrementing number (`_01`) to the filename. If the next number is already taken it will be skipped.
+
+#### Export AAF
+Will do exactly what you think. All output options (including output location) are pre-defined, so no worries.
 
 ## Footage
 ![RM_footage](payloads/RM_footage.png)
