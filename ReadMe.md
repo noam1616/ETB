@@ -1,8 +1,9 @@
 ![CMLogo](payloads/cmlogo.png)
 
 # Moon Active Editor's Toolbox
-
-Here's a quick scan of the options this panel offers:
+This is a short manual to our neat little Premiere Panel.
+I believe taking half an hour and just playing with it would be the best source of knowledge, but in any case, here's a quick scan of the options this panel offers:
+> one thing to keep in mind is that unfortunately, **none of the actions performed by this panel are undoable** (thanks for nothing, Adobe!).
 
 ## The Coin Master logo
 ![RM_logo](payloads/RM_logo.png)
@@ -60,8 +61,12 @@ Drag to continuously scale up and down the footage.
 + Use `alt` to fine scale nice and slowly.
 
 #### Rotate (⭯/⭮)
-+ Click to rotate by 90°.
++ Click to rotate selected clips by 90°.
 + Drag to rotate continuously. `Shift` and `alt` will work here as well.
+##### Modifiers:
++ `ctrl-click` to rotate all green-labeled clips (namely - multicam footage)
++ `shift-click` to rotate all *multicams* + all *adjustment layaers*
++ `ctrl+shift-click` to rotate all clips in sequence.
 
 #### Reset
 You might assume the `Reset` is self-explanatory, but that's hardly the case here.  
