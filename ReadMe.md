@@ -1,12 +1,17 @@
 ![CMLogo](payloads/cmlogo.png)
 
-# Create panels for Premiere Pro
+# Moon Active Editor's Toolbox
 
-*Last updated October 2018, current released version = Premiere Pro 13.0, also known as "Premiere Pro CC 2019".
-    
-# Premiere Pro 13.0 : API Improvements
+Here's a quick scan of the options this panel offers:
 
-We've added many new capabilities for the 13.0 release. All of these are exercised in the PProPanel sample, [available on GitHub](https://github.com/Adobe-CEP/Samples/tree/master/PProPanel).
+# The Coin Master logo
+
+### The logo makes this panel look nice, but it's also functional:
+click the logo to reveal corner selection.
+drag the logo into the timeline to add.
+
+## Dragging assets (Logo / Outro / Audio)
+occasionally dragging into the timeline doesn't work. I'm not sure exactly why. if dragging into the timeline doesn't work, drag the asset into the project window, and then bring it into the timeline.
 
 ### Get and set footage interpretation
 
