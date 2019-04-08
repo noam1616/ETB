@@ -27,10 +27,10 @@ occasionally dragging into the timeline doesn't work. I'm not sure exactly why. 
 - Create a subfolder named `PPP` and place a copy of the project there.
 
 #### Render Master [hidden]
-The `Render Master` button is hidden and will appear when you click the **Timeline** title.
+The `Render Master` button is hidden and will appear when you click the **Timeline** title.  
 It will render a master file (uncompressed *quicktime animation*) into `Z:/ART/Projects/<project folder>/07. Render/05. Master`. 
-    **rendering a master is not an everyday task. render a master only once all necessary approvals has been given and the video is finalized.**
-    *don't forget to `Mark Outro` before rendering a master video.*
+>**rendering a master is not an everyday task. render a master only once all necessary approvals has been given and the video is finalized.**
+>*don't forget to `Mark Outro` before rendering a master video.*
 
 ## Project
 ![RM_project](payloads/RM_project.png)
@@ -43,6 +43,22 @@ Will do exactly what you think. All output options (including output location) a
 
 ## Footage
 ![RM_footage](payloads/RM_footage.png)
+Here's where we get to the good stuff. The Footage buttons lets you manipulate the selected videos on the timeline.  
+Where normally you would have to look for the *"Effects Controls"* Panel (how come it's never there when you need it??) and start manipulating your videos one at a time - now there's a quick and easy way. All buttons are able to manipulate as many files as you have selected, though if you have a bunch things might start to get laggy.  
+
+> Buttons are draggable as well (though "Reset" isn't)  
+
+#### Scale (-/+)
+##### Click:
+Clicking these will scale the videos by 5%.
++ Use `Shift` to scale by 10%
++ Use `alt` to scale by 1%
+
+##### Drag:
+Drag to continuously scale up and down the footage.
++ Use `Shift` to scale faster.
++ Use `alt` to fine scale nice and slowly. 
+
 
 ## Formats
 ![RM_formats](payloads/RM_formats.png)
