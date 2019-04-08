@@ -304,56 +304,40 @@ $._PPP_={
 	resetFootage : function(hd){
 		var x = app.project.activeSequence.frameSizeHorizontal;
 		var y = app.project.activeSequence.frameSizeVertical;
-		var collection = $._PPP_.getSelectedClips();
+		var collection = $._PPP_.getSelectedClips()
 		$._PPP_.forEachClip(collection, function(clip){
-			var props = clip.components[1].properties;
-			var rot = props[4].getValue();
+			var props = clip.components[1].properties,
+				rot = props[4].getValue()
+
 			if (hd == "fit") {
-				hd = $._PPP_.scaleToFrame(clip)
+				hd = $._PPP_.scaleToFrame(clip)[0]
 			}
+			if (hd == "fill") {
+				hd = $._PPP_.scaleToFrame(clip)[1]
+			}
+			
 		    props[0].setValue([0.5,0.5]);
 		    props[1].setValue(hd, true);
-		    if ( x > y ) props[4].setValue(0, 1)
+		    if (rot % 90 != 0 ) props[4].setValue(0, 1)
 		    	
 		})
 	},
 
 	scaleToFrame : function(clip){
-		var rot = clip.components[1].properties[4].getValue();
-		var dimensions = clip.projectItem.getProjectMetadata().split('<premierePrivateProjectMetaData:Column.Intrinsic.VideoInfo>')[1].split('(')[0].split(' x ');
-		var x = dimensions[0];
-		var y = dimensions[1];
-		var frameX = app.project.activeSequence.frameSizeHorizontal;
-		var frameY = app.project.activeSequence.frameSizeVertical;
-		if ( frameX < frameY && rot != 0 ) {
-			var z = x;
-			x = y;
-			y = z;
-		}
-		if( x/frameX < y/frameY ){
-			return frameY/y*100
-		}
-		return frameX/x*100
-		
+		var dimensions = clip.projectItem.getProjectMetadata().split('<premierePrivateProjectMetaData:Column.Intrinsic.VideoInfo>')[1].split('(')[0].split(' x '),
+			rot = clip.components[1].properties[4].getValue(),
+			x = dimensions[0],
+			y = dimensions[1],
+			frameX = app.project.activeSequence.frameSizeHorizontal,
+			frameY = app.project.activeSequence.frameSizeVertical,
+			scaleRatio
+
+		if ( rot % 90 == 0 && rot % 180 != 0) y = [x, x = y][0]
+
+		scaleRatio = [frameX/x*100, frameY/y*100].sort()
+		return scaleRatio
+
 	},
-/*
-	resetFootage : function(hd){
-	    var collection = $._PPP_.getMulticams(5);
-	    $._PPP_.forEachClip(collection, function(clip){
-	    var props = clip.components[1].properties;
-	    try {	
-		    props[0].setValue([0.5,0.5]);
-		    props[1].setValue(Number (hd));
-		    props[4].setValue(0, true);
-		    }
-		 catch (err) {
-		 	props[0].setValue("0.5,0.5");
-		    props[1].setValue(hd);
-		    props[4].setValue("0", true);
-		    }
-		 })
-	    }
-	},*/
 
 	rotateMulticams : function(){
 	    collection = $._PPP_.getMulticams(5);

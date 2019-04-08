@@ -128,7 +128,7 @@
 			<div class="formats">
 				<button class="controlBg textStyle" id="scaleDown">-</button>
 				<button class="controlBg textStyle" id="rotateL">⭯</button>
-				<button class="textStyle" id="bla">Reset</button>
+				<button class="textStyle" id="reset">Reset</button>
 				<button class="controlBg textStyle" id="rotateR">⭮</button>
 				<button class="controlBg textStyle" id="scaleUp">+</button>
 				<button class="hide" id="stitchusingdefaultpreset">Stitch selected files in AME</button>
@@ -482,9 +482,11 @@
 		}
 	});  
 
-	$('#bla').click(function(e){
+	$('#reset').click(function(e){
 		if (e.ctrlKey) {
-			evalScript('$._PPP_.resetFootage("100")')
+			evalScript('$._PPP_.resetFootage(100)')
+		} else if (e.shiftKey) {
+			evalScript("$._PPP_.resetFootage('fill')")
 		}
 		else {
 			evalScript("$._PPP_.resetFootage('fit')")
