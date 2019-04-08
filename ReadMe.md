@@ -4,14 +4,17 @@
 
 Here's a quick scan of the options this panel offers:
 
+![RM_logo](payloads/RM_logo.png)
 # The Coin Master logo
 
-### The logo makes this panel look nice, but it's also functional:
+##### The logo makes this panel look nice, but it's also functional:
 click the logo to reveal corner selection.
 drag the logo into the timeline to add.
 
-## Dragging assets (Logo / Outro / Audio)
+#### * Dragging assets (Logo / Outro / Audio)
 occasionally dragging into the timeline doesn't work. I'm not sure exactly why. if dragging into the timeline doesn't work, drag the asset into the project window, and then bring it into the timeline.
+
+
 
 ### Get and set footage interpretation
 
