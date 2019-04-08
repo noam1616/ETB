@@ -43,8 +43,8 @@ Will do exactly what you think. All output options (including output location) a
 
 ## Footage
 ![RM_footage](payloads/RM_footage.png)
-Here's where we get to the good stuff. The Footage buttons lets you manipulate the selected videos on the timeline.  
-Where normally you would have to look for the *"Effects Controls"* Panel (how come it's never there when you need it??) and start manipulating your videos one at a time - now there's a quick and easy way. All buttons are able to manipulate as many files as you have selected, though if you have a bunch things might start to get laggy.  
+> Here's where we get to the good stuff. The Footage buttons lets you manipulate the selected videos on the timeline.  
+> Where normally you would have to look for the *"Effects Controls"* Panel (how come it's never there when you need it??) and start manipulating your videos one at a time - now there's a quick and easy way. All buttons are able to manipulate as many files as you have selected, though if you have a bunch things might start to get laggy.  
 
 > Buttons are draggable as well (though "Reset" isn't)  
 
@@ -73,15 +73,22 @@ In terms of `position`, it will always align the footage to the center of the fr
 + holding `ctrl` while clicking will scale the footage to its original size (100%).
 
 #### Move (bitch, get out the way)
-This might be my favorite. dragging this button around will drag the selected videos on timeline accordingly, letting you reposition multiple videos with ease.  
+This might be my favorite. it's a neat little joystick, and oh my, it's indeed full of joy. dragging this button around will drag the selected videos on timeline accordingly, letting you reposition multiple videos with ease.  
 `shift/alt` modifiers will work here as they do for scale/rotate - massive and fine movement respectively.
 
 
 ## Formats
 ![RM_formats](payloads/RM_formats.png)
+These buttons let's you easily change the dimensions of the frame (sequence settings). you see three of them (landscape / portrait / square), but `shift` clicking the portrait button will make your frame `2:3`
++ `ctrl` click to duplicate current sequence and change to new dimensions (this will also give a suffix to the new sequence name - for example *"Sequence Name_square"*)
 
 ## Outro
 ![RM_outro](payloads/RM_outro.png)
+Choose the language and the type of the outro, and drag this whole section to the timeline to import. You can also alt-drag it as you would any other file, to replace existing video asset present on the timeline.
+
 
 ## Audio (SFX / Music)
 ![RM_audio](payloads/RM_audio.png)
+Choose audio file using the drop-down menus and drag directly to timeline.
++ `ctrl` click the title ("Game SFX") to switch audio categories.  
++ available audio categories are `Game SFX` / `Non-Game SFX` / `Music` / `Narration`
