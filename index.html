@@ -381,7 +381,13 @@
 					$('#drag').addClass('hover')
 					y /= 100
 					x /= 100
-					evalScript('$._PPP_.changePos('+x+','+y+')')
+					if (e.shiftKey) {
+						y /= 10
+						x /= 10
+						evalScript('$._PPP_.changePosStraight('+x+','+y+')')
+					} else {
+						evalScript('$._PPP_.changePos('+x+','+y+')')
+					}
 
 				} else if (dragScale) {
 

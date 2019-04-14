@@ -106,6 +106,19 @@ $._PPP_={
 		})
 	},
 
+	changePosStraight : function (x,y) {
+		var clips = $._PPP_.getSelectedClips();
+		$._PPP_.forEachClip(clips, function(clip){
+			var position = clip.name.split('_._._')[1].split(',');
+			if ( Math.abs(x) > Math.abs(y)) {
+				position[0] -= x;
+			} else {
+				position[1] -= y;
+			}
+			clip.components[1].properties[0].setValue(position, true)
+		})
+	},
+
 	changeRot : function (y) {
 		var clips = $._PPP_.getSelectedClips();
 		$._PPP_.forEachClip(clips, function(clip){
