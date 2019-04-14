@@ -19,6 +19,7 @@ $._PPP_={
 
 		var name = app.project.name;
 		var path = app.project.path.split(name)[0];
+		var cleanname, seq, date, today, target, thisFile, render;
 
 		if (path.match('04. Edit') == null){
 			var renderFolder = new Folder;
@@ -29,29 +30,34 @@ $._PPP_={
 			path = path+'\\03. Audio\\05. AAF\\';
 		}
 		
-		var cleanname = name.split('.prproj')[0];
-		var seq = app.project.activeSequence.name;
+		cleanname = name.split('.prproj')[0];
+		seq = app.project.activeSequence.name;
 
 		// format date
-		var date = new Date;
-		var today = date.getDate()+'-'+(date.getMonth()+1)+'-'+(date.getYear()+1900);
+		date = new Date;
+		today = date.getDate()+'-'+(date.getMonth()+1)+'-'+(date.getYear()+1900);
 
 		//create folders
 		var folder = new Folder(path+today+'\\PPP')
 		if (!folder.exists){
 		    folder.create()
 		}
-		var target = new File(folder+'\\'+date.getHours()+'-'+date.getMinutes()+'_'+name);
-		var thisFile = new File (app.project.path);
+		target = new File(folder+'\\'+date.getHours()+'-'+date.getMinutes()+'_'+name);
+		thisFile = new File (app.project.path);
 		thisFile.copy(target);
 
 		if (app.project.activeSequence){
 			if (path) {
 
-				var fullOutPath 	= path+'_'+seq+'.aaf';
+				var fullOutPath 	= path+seq;
+
+				if (app.project.activeSequence.getOutPoint()>0) {render = 1}
+					else {render = 2}
+				app.encoder.encodeSequence(app.project.activeSequence, fullOutPath+'.mp4', 'Z:\\ART\\Recources\\Presets\\Ongoing Version.epr', render, 1);
+				app.encoder.startBatch();
 
 				app.project.exportAAF(	app.project.activeSequence,			// which sequence
-										fullOutPath,						// output path
+										fullOutPath+'.aaf',					// output path
 										0,									// mix down video?
 										1,									// explode to mono?
 										48000,								// sample rate
@@ -340,7 +346,7 @@ $._PPP_={
 	},
 
 	rotateMulticams : function(){
-	    collection = $._PPP_.getMulticams(5);
+	    collection = $._PPP_.getLabel(5);
 	    $._PPP_.forEachClip(collection, function(clip){
 	    var props = clip.components[1].properties;
 	    	props[0].setValue([0.5,0.5]);
@@ -360,7 +366,7 @@ $._PPP_={
 	},
 
 	rotateAdjustments : function(){
-	    collection = $._PPP_.getMulticams(3);
+	    collection = $._PPP_.getLabel(3);
 	    $._PPP_.forEachClip(collection, function(clip){
 	    var props = clip.components[1].properties;
     	props[4].setValue(90,1);
@@ -386,55 +392,49 @@ $._PPP_={
 	},
 
 	getSelectedClips : function(){
-		var actSeq = app.project.activeSequence;
-		var tracks = actSeq.videoTracks;
-	    var collection = [];
-	    var s = 0;
+		var tracks = app.project.activeSequence.videoTracks,
+		    collection = [];
+
 	    for ( var a=0 ; a< tracks.numTracks ; a++){
 	        var trackItems = tracks[a].clips;
 	        for ( var i=0 ; i< trackItems.numItems ; i++){
 
 	            var currentClip = trackItems[i];
-	            if( trackItems[i].isSelected()){
-	                collection[s] = trackItems[i];
-	                s++;
+	            if( trackItems[i].isSelected() ) {
+	                collection.push( trackItems[i] )
 	            }                
 	        }
 	    }
 	    return collection
 	},
 
-	getMulticams : function(label){
-		var actSeq = app.project.activeSequence;
-		var tracks = actSeq.videoTracks;
-	    var collection = [];
-	    var s = 0;
+	getLabel : function (label) {
+		var tracks = app.project.activeSequence.videoTracks,
+		    collection = [];
+
 	    for ( var a=0 ; a< tracks.numTracks ; a++){
 	        var trackItems = tracks[a].clips;
 	        for ( var i=0 ; i< trackItems.numItems ; i++){
 
 	            var currentLabel = trackItems[i].projectItem.getColorLabel();
 	            if( currentLabel == label ){
-	                collection[s] = trackItems[i];
-	                s++;
+	                collection.push( trackItems[i] )
 	            }                
 	        }
 	    }
 	    return collection
 	},
 
-	getAllClips : function(){
-		var actSeq = app.project.activeSequence;
-		var tracks = actSeq.videoTracks;
-	    var collection = [];
-	    var s = 0;
+	getAllClips : function () {
+		var tracks = app.project.activeSequence.videoTracks,
+		    collection = [];
+
 	    for ( var a=0 ; a< tracks.numTracks ; a++){
 	        var trackItems = tracks[a].clips;
 	        for ( var i=0 ; i< trackItems.numItems ; i++){
 
 	            var currentClip = trackItems[i];
-	                collection[s] = trackItems[i];
-	                s++;                         
+	                collection.push( trackItems[i] )                        
 	        }
 	    }
 	    return collection
@@ -446,13 +446,14 @@ $._PPP_={
 	    }
 	},
 
-	setCompToPortrait : function(){
-		var actSeq = app.project.activeSequence;
-	    var tracks = actSeq.videoTracks;
-	    var prop = actSeq.getSettings();
-	    prop.videoFrameWidth = 1080;
-	    prop.videoFrameHeight = 1920;
-	    actSeq.setSettings(prop)	 
+	makePortrait : function () {
+		$._PPP_.duplicate(1080, 1920, "_Portrait(Converted)")
+		var adjusments = $._PPP_.getLabel(3),
+			footage = $._PPP_.getLabel(5).concat(adjusments)
+
+		$._PPP_.forEachClip(footage, function (clip) {
+			clip.components[1].properties[4].setValue(90, true);
+		})
 	},
 
 	setCompSize : function(width, height){
@@ -498,13 +499,6 @@ $._PPP_={
 	            newClearMarker.setTypeAsChapter();
 	            }
 	    } 
-	},
-
-	writeNameToConsole : function(){
-	    collection = $._PPP_.getMulticams();
-	    $._PPP_.forEachClip(collection, function(clip){
-	    $.writeln(clip.name)            
-	    })
 	},
 
 	createDeepFolderStructure : function(foldersArray, maxDepth) {

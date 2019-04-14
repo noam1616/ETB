@@ -456,9 +456,7 @@
 		document.getElementById("outroDimensions").selectedIndex = "1";
 		document.getElementById("watermarkDimensions").selectedIndex = "1";
 	  	if (e.ctrlKey) {
-	  		evalScript('$._PPP_.duplicate(1080, 1920, "_Portrait")');
-	  		evalScript('$._PPP_.rotateAdjustments()');
-	  		evalScript('$._PPP_.rotateMultcams()');
+	  		evalScript('$._PPP_.makePortrait()');
 	  	}
 	  	else if (e.shiftKey) {
 	  		document.getElementById("outroDimensions").selectedIndex = "3";
@@ -474,7 +472,6 @@
 		document.getElementById("outroDimensions").selectedIndex = "0";
 		document.getElementById("watermarkDimensions").selectedIndex = "0";
 		if (e.ctrlKey) {
-			// getStyleSheet('stylesheet', '.landscape').style.cursor = "cell";
 			evalScript('$._PPP_.duplicate(1920, 1080, "_Landscape")')
 		}
 		else {

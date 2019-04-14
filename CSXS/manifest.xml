@@ -14,7 +14,7 @@
 * written permission of Adobe. 
 **************************************************************************/
 -->	
-<ExtensionManifest Version="5.0" ExtensionBundleId="com.ma.ETB" ExtensionBundleVersion="1.1"
+<ExtensionManifest Version="5.0" ExtensionBundleId="com.ma.ETB" ExtensionBundleVersion="1.11"
 ExtensionBundleName="Premiere Pro sample panel" 
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<ExtensionList>
