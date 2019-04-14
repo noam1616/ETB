@@ -86,6 +86,7 @@ This might be my favorite. it's a neat little joystick, and oh my, it's indeed f
 ![RM_formats](payloads/RM_formats.png)
 These buttons let's you easily change the dimensions of the frame (sequence settings). you see three of them (landscape / portrait / square), but `shift` clicking the portrait button will make your frame `2:3`
 + `ctrl` click to duplicate current sequence and change to new dimensions (this will also give a suffix to the new sequence name - for example *"Sequence Name_square"*)
++ Portrait modifiers: while `ctrl` click landscape/square buttons duplicates the sequence, `ctrl+click portrait button` gets special treatment. it'll duplicate the sequence, and rotate all multicams+adjustments sideways.
 
 ## Outro
 ![RM_outro](payloads/RM_outro.png)
