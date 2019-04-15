@@ -1,6 +1,6 @@
 ZXPSignCmd -selfSignedCert IL TA MoonActive Noam 123123123 Z:\ART\Recources\Plugins\MAET.p12
 
 ZXPSignCmd -sign "C:\Program Files (x86)\Common Files\Adobe\CEP\extensions\com.ma.ETB" Z:\ART\Recources\Plugins\MAET_1.07.zxp Z:\ART\Recources\Plugins\MAET.p12 123123123
-ZXPSignCmd -sign Z:\ART\Recources\Plugins\MAtoolbox\com.ma.ETB Z:\ART\Recources\Plugins\MA_Toolbox_1.11.zxp Z:\ART\Recources\Plugins\MAtoolbox\MAET.p12 123123123
+ZXPSignCmd -sign Z:\ART\Recources\Plugins\MAtoolbox\com.ma.ETB Z:\ART\Recources\Plugins\MAtoolbox\MA_Toolbox_1.13.zxp Z:\ART\Recources\Plugins\MAtoolbox\MAET.p12 123123123
 
-ZXPSignCmd -verify Z:\ART\Recources\Plugins\MA_Toolbox_1.11.zxp -certinfo
+ZXPSignCmd -verify Z:\ART\Recources\Plugins\MAtoolbox\MA_Toolbox_1.13.zxp -certinfo
